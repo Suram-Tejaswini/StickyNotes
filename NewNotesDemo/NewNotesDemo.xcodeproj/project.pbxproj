@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C6E54F122BB6F3500F8CC40 /* SubMenuWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6E54EF22BB6F3500F8CC40 /* SubMenuWindowController.xib */; };
+		1C6E54F222BB6F3500F8CC40 /* SubMenuWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6E54F022BB6F3500F8CC40 /* SubMenuWindowController.swift */; };
 		1CF8ABC322B8A40900799C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8ABC222B8A40900799C1C /* AppDelegate.swift */; };
 		1CF8ABC522B8A40A00799C1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8ABC422B8A40A00799C1C /* Assets.xcassets */; };
 		1CF8ABC822B8A40A00799C1C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8ABC622B8A40A00799C1C /* MainMenu.xib */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C6E54EF22BB6F3500F8CC40 /* SubMenuWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubMenuWindowController.xib; sourceTree = "<group>"; };
+		1C6E54F022BB6F3500F8CC40 /* SubMenuWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubMenuWindowController.swift; sourceTree = "<group>"; };
 		1CF8ABBF22B8A40900799C1C /* NewNotesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewNotesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF8ABC222B8A40900799C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CF8ABC422B8A40A00799C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 				1CF8AC6222B8EEB000799C1C /* NotesDetail.xib */,
 				1CF8ABC422B8A40A00799C1C /* Assets.xcassets */,
 				1CF8ABC622B8A40A00799C1C /* MainMenu.xib */,
+				1C6E54F022BB6F3500F8CC40 /* SubMenuWindowController.swift */,
+				1C6E54EF22BB6F3500F8CC40 /* SubMenuWindowController.xib */,
 				1CF8ABEC22B8BC3000799C1C /* NewNote.swift */,
 				1CF8ABED22B8BC3000799C1C /* NewNote.xib */,
 				1CF8ABC922B8A40A00799C1C /* Info.plist */,
@@ -239,6 +245,7 @@
 			files = (
 				1CF8AC6322B8EEB000799C1C /* NotesDetail.xib in Resources */,
 				1CF8ABC522B8A40A00799C1C /* Assets.xcassets in Resources */,
+				1C6E54F122BB6F3500F8CC40 /* SubMenuWindowController.xib in Resources */,
 				1CF8ABC822B8A40A00799C1C /* MainMenu.xib in Resources */,
 				1CF8ABEF22B8BC3000799C1C /* NewNote.xib in Resources */,
 			);
@@ -268,6 +275,7 @@
 				1CF8ABEE22B8BC3000799C1C /* NewNote.swift in Sources */,
 				1CF8ABC322B8A40900799C1C /* AppDelegate.swift in Sources */,
 				1CF8AC6022B8DB5700799C1C /* NotesDetail.swift in Sources */,
+				1C6E54F222BB6F3500F8CC40 /* SubMenuWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

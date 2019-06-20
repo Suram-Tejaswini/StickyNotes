@@ -13,11 +13,10 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
 
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var subMenu: NSMenu!
-    @IBOutlet weak var searchNotes: NSSearchField!
+   // @IBOutlet weak var searchNotes: NSSearchField!
     @IBOutlet weak var statusMenu: NSMenu!
-    
-    let note = NotesDetail()
-    var listOfNotes = [String]()
+
+  //  var listOfNotes = [String]()
     
     var newNoteWindowController : NSWindowController?
     var subMenuWindowController : NSWindowController?
@@ -31,11 +30,16 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
         self.statusItem?.button?.title = "NotesDemo"
         statusItem?.menu = statusMenu
         statusItem!.button?.cell?.isHighlighted = true
-        self.searchNotes.delegate = self
-        self.subMenu.delegate = self
-        searchItem.view = self.searchNotes
+//        self.searchNotes.delegate = self
+//        self.subMenu.delegate = self
+//        searchItem.view = self.searchNotes
+//        self.subMenu.addItem(searchItem)
+//        listOfNotes = note.arraylist
+        self.subMenuWindowController = SubMenuWindowController.init(windowNibName: "SubMenuWindowController")
+        //        self.subMenuWindowController.showWindow(self)
+        searchItem.view = subMenuWindowController?.window?.contentView
+        
         self.subMenu.addItem(searchItem)
-        listOfNotes = note.arraylist
         
     }
     
@@ -61,23 +65,23 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
     }
    
   
-    func menuNeedsUpdate(_ menu: NSMenu) {
-         note.configureSubMenuWithItems(notesList: listOfNotes)
-    }
-
-    func controlTextDidChange(_ obj: Notification) {
-        print("done")
-        let searchString = searchNotes.stringValue
-        if searchString != "" {
-            listOfNotes.removeAll()
-            let notesArray = note.arraylist
-            listOfNotes = notesArray.filter{$0.lowercased().hasPrefix(searchString.lowercased())}
-            self.menuNeedsUpdate(subMenu)
-        }else{
-           let notesArray = note.arraylist
-            self.menuNeedsUpdate(subMenu)
-    }
-}
+//    func menuNeedsUpdate(_ menu: NSMenu) {
+//         note.configureSubMenuWithItems(notesList: listOfNotes)
+//    }
+//
+//    func controlTextDidChange(_ obj: Notification) {
+//        print("done")
+//        let searchString = searchNotes.stringValue
+//        if searchString != "" {
+//            listOfNotes.removeAll()
+//            let notesArray = note.arraylist
+//            listOfNotes = notesArray.filter{$0.lowercased().hasPrefix(searchString.lowercased())}
+//            self.menuNeedsUpdate(subMenu)
+//        }else{
+//           let notesArray = note.arraylist
+//            self.menuNeedsUpdate(subMenu)
+//    }
+//}
 }
 
 
