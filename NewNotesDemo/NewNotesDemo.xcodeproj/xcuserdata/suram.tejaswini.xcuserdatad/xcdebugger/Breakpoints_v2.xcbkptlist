@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NewNotesDemo/SubMenuWindowController.swift"
-            timestampString = "582726673.253487"
+            filePath = "NewNotesDemo/AppDelegate.swift"
+            timestampString = "583239473.216985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "controlTextDidChange_Custom(obj:)"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "configureNotesDetails()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NewNotesDemo/SubMenuWindowController.swift"
-            timestampString = "582726673.253545"
+            filePath = "NewNotesDemo/AppDelegate.swift"
+            timestampString = "583239473.217247"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "controlTextDidChange_Custom(obj:)"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "fetchDetails()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewNotesDemo/AppDelegate.swift"
+            timestampString = "583239473.217298"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "fetchDetails()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

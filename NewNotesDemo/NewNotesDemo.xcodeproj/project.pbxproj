@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1C6E54F122BB6F3500F8CC40 /* SubMenuWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6E54EF22BB6F3500F8CC40 /* SubMenuWindowController.xib */; };
 		1C6E54F222BB6F3500F8CC40 /* SubMenuWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6E54F022BB6F3500F8CC40 /* SubMenuWindowController.swift */; };
+		1CA3297522C34A5E0013FA39 /* NotesDetails.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3297322C34A5E0013FA39 /* NotesDetails.xcdatamodeld */; };
 		1CF8ABC322B8A40900799C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8ABC222B8A40900799C1C /* AppDelegate.swift */; };
 		1CF8ABC522B8A40A00799C1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8ABC422B8A40A00799C1C /* Assets.xcassets */; };
 		1CF8ABC822B8A40A00799C1C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8ABC622B8A40A00799C1C /* MainMenu.xib */; };
@@ -16,8 +17,6 @@
 		1CF8ABDF22B8A40A00799C1C /* NewNotesDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8ABDE22B8A40A00799C1C /* NewNotesDemoUITests.swift */; };
 		1CF8ABEE22B8BC3000799C1C /* NewNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8ABEC22B8BC3000799C1C /* NewNote.swift */; };
 		1CF8ABEF22B8BC3000799C1C /* NewNote.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8ABED22B8BC3000799C1C /* NewNote.xib */; };
-		1CF8AC6022B8DB5700799C1C /* NotesDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8AC5E22B8DB5700799C1C /* NotesDetail.swift */; };
-		1CF8AC6322B8EEB000799C1C /* NotesDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8AC6222B8EEB000799C1C /* NotesDetail.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +39,7 @@
 /* Begin PBXFileReference section */
 		1C6E54EF22BB6F3500F8CC40 /* SubMenuWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubMenuWindowController.xib; sourceTree = "<group>"; };
 		1C6E54F022BB6F3500F8CC40 /* SubMenuWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubMenuWindowController.swift; sourceTree = "<group>"; };
+		1CA3297422C34A5E0013FA39 /* NotesDetails.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NotesDetails.xcdatamodel; sourceTree = "<group>"; };
 		1CF8ABBF22B8A40900799C1C /* NewNotesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewNotesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF8ABC222B8A40900799C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CF8ABC422B8A40A00799C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,8 +54,6 @@
 		1CF8ABE022B8A40A00799C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CF8ABEC22B8BC3000799C1C /* NewNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNote.swift; sourceTree = "<group>"; };
 		1CF8ABED22B8BC3000799C1C /* NewNote.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewNote.xib; sourceTree = "<group>"; };
-		1CF8AC5E22B8DB5700799C1C /* NotesDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesDetail.swift; sourceTree = "<group>"; };
-		1CF8AC6222B8EEB000799C1C /* NotesDetail.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesDetail.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				1CF8ABC222B8A40900799C1C /* AppDelegate.swift */,
-				1CF8AC5E22B8DB5700799C1C /* NotesDetail.swift */,
-				1CF8AC6222B8EEB000799C1C /* NotesDetail.xib */,
 				1CF8ABC422B8A40A00799C1C /* Assets.xcassets */,
 				1CF8ABC622B8A40A00799C1C /* MainMenu.xib */,
 				1C6E54F022BB6F3500F8CC40 /* SubMenuWindowController.swift */,
@@ -117,6 +113,7 @@
 				1CF8ABED22B8BC3000799C1C /* NewNote.xib */,
 				1CF8ABC922B8A40A00799C1C /* Info.plist */,
 				1CF8ABCA22B8A40A00799C1C /* NewNotesDemo.entitlements */,
+				1CA3297322C34A5E0013FA39 /* NotesDetails.xcdatamodeld */,
 			);
 			path = NewNotesDemo;
 			sourceTree = "<group>";
@@ -243,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CF8AC6322B8EEB000799C1C /* NotesDetail.xib in Resources */,
 				1CF8ABC522B8A40A00799C1C /* Assets.xcassets in Resources */,
 				1C6E54F122BB6F3500F8CC40 /* SubMenuWindowController.xib in Resources */,
 				1CF8ABC822B8A40A00799C1C /* MainMenu.xib in Resources */,
@@ -272,9 +268,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CA3297522C34A5E0013FA39 /* NotesDetails.xcdatamodeld in Sources */,
 				1CF8ABEE22B8BC3000799C1C /* NewNote.swift in Sources */,
 				1CF8ABC322B8A40900799C1C /* AppDelegate.swift in Sources */,
-				1CF8AC6022B8DB5700799C1C /* NotesDetail.swift in Sources */,
 				1C6E54F222BB6F3500F8CC40 /* SubMenuWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,6 +587,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1CA3297322C34A5E0013FA39 /* NotesDetails.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1CA3297422C34A5E0013FA39 /* NotesDetails.xcdatamodel */,
+			);
+			currentVersion = 1CA3297422C34A5E0013FA39 /* NotesDetails.xcdatamodel */;
+			path = NotesDetails.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1CF8ABB722B8A40900799C1C /* Project object */;
 }
