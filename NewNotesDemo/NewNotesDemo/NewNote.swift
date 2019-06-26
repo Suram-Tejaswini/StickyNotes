@@ -8,20 +8,28 @@
 
 import Cocoa
 
-class NewNote: NSWindowController {
+class NewNote: NSWindowController ,NSTextViewDelegate{
 
+    @IBOutlet var notesView: NSTextView!
     override func windowDidLoad() {
         super.windowDidLoad()
 
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        shouldCascadeWindows = true
+        self.notesView?.delegate = self
     }
     override init(window: NSWindow?) {
-        
         super.init(window:nil)
-        shouldCascadeWindows = false
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
     }
+    func setUpConfig(data: String,title:String)  {
+        self.window?.title = title
+        self.notesView.string = data
+    }
+    func textDidChange(_ notification: Notification) {
+       let timestamp = DateFormatter.localizedString(from:Date(), dateStyle: .medium, timeStyle: .short)
+        self.window?.title = timestamp
+    }   
 }
