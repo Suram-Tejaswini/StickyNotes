@@ -93,6 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
     }
     
     @IBAction func showNotesList(_ sender:Any){
+        saveDetails()
         subMenuWindowController.cofigureSearchDataMenu(itemsList: Array(fetchDetails().values))
         searchItem.view = subMenuWindowController?.window?.contentView
     }
