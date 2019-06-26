@@ -69,7 +69,6 @@ class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableV
             let searchString = searchFieldOutlet.stringValue
 //            searchList = arraylist.filter{$0.lowercased().hasPrefix(searchString.lowercased())}
            searchList = arraylist.filter({(item: String) -> Bool in
-                
                 let stringMatch = item.lowercased().range(of: searchString.lowercased())
                 return stringMatch != nil ? true : false
             })
