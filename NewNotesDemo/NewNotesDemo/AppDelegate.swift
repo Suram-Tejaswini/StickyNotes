@@ -28,19 +28,28 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
        
        // Insert code here to initialize your application
         self.statusItem?.button?.title = "NotesDemo"
-        statusItem?.menu = statusMenu
         statusItem!.button?.cell?.isHighlighted = true
-        configureNotesDetails()
+        statusItem?.menu = statusMenu
+        statusMenu?.delegate = self
        
         self.subMenuWindowController = SubMenuWindowController.init(windowNibName: "SubMenuWindowController")
         searchItem.view = subMenuWindowController?.window?.contentView
-
         self.subMenu.addItem(searchItem)
+        
        // deleteAllRecords()  // for testing
     }
    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+    }
+    func menuWillOpen(_ menu: NSMenu){
+        if  newNoteWindowController != nil{
+            if let noteStr = newNoteWindowController?.notesView.string, noteStr != "" {
+                saveDetails()
+            }
+        }
+        subMenuWindowController.cofigureSearchDataMenu(itemsList: fetchDetails())
+        searchItem.view = subMenuWindowController?.window?.contentView
     }
     
     func deleteAllRecords() {
@@ -71,84 +80,75 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
     }
     
     func fetchDetails() -> [String:String]{
-    
-    guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return [:] }
-    let managedContext = appDelegate.persistentContainer.viewContext
-    
-    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
-    // let fetchDateRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
-    do {
-    let datesList = try managedContext.fetch(fetchRequest)
-   
-    for i in 0..<datesList.count{
-    if  let data:NSManagedObject =  datesList[i].value(forKeyPath:"currentNotes")as? NSManagedObject, let date:String = datesList[i].value(forKeyPath:"cDate") as? String {
-    let returnedNote:String = data.value(forKeyPath: "notes") as! String
-    notesListForDate.updateValue(returnedNote, forKey: date )
+        guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return [:] }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
+        // let fetchDateRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
+        do {
+            let datesList = try managedContext.fetch(fetchRequest)
+
+            for i in 0..<datesList.count{
+                if  let data:NSManagedObject =  datesList[i].value(forKeyPath:"currentNotes")as? NSManagedObject, let date:String = datesList[i].value(forKeyPath:"cDate") as? String {
+                    let returnedNote:String = data.value(forKeyPath: "notes") as! String
+                    notesListForDate.updateValue(returnedNote, forKey: date )
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
+        return notesListForDate
         }
-    } catch let error as NSError {
-    print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    return notesListForDate
-    }
     
     @IBAction func showNotesList(_ sender:Any){
-        saveDetails()
-        subMenuWindowController.cofigureSearchDataMenu(itemsList: Array(fetchDetails().values))
-        searchItem.view = subMenuWindowController?.window?.contentView
+
     }
     
     @IBAction func createNewNote(_ sender: Any) {
-        if  newNoteWindowController != nil{
-            saveDetails()
-        }
         newNoteWindowController = NewNote(windowNibName: "NewNote")
         newNoteWindowController?.showWindow(nil)
     }
     
     @IBAction func showPrferences(_ sender: Any) {
-     saveDetails()
+       
     }
     
     @IBAction func quitTheApp(_ sender: Any) {
-        saveDetails()
         NSApplication.shared.terminate(self)
     }
     
     @objc func saveDetails()  {
         let timestamp = DateFormatter.localizedString(from:Date(), dateStyle: .medium, timeStyle: .long)
-        saveNotesDetails(note:(self.newNoteWindowController?.notesView!.string)!, date: timestamp)
+            saveNotesDetails(note:(self.newNoteWindowController?.notesView!.string)!, date: timestamp)
     }
     
-    func saveNotesDetails(note:String,date:String){
-    
-    guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return }
-    
-    let managedContext: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
-    
-    //create date
-    let dateEntity = NSEntityDescription.entity(forEntityName: "CurrentDate", in: managedContext)
-    let newDate = NSManagedObject(entity: dateEntity!, insertInto: managedContext)
+    func saveNotesDetails(note:String?,date:String){
+        guard note != "" else {return}
+        guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return }
         
-    //populate date
-    newDate.setValue(date, forKey: "cDate")
-    
-    //create Note
-    let notesEntity = NSEntityDescription.entity(forEntityName: "Note", in: managedContext)
-    let newNote = NSManagedObject(entity: notesEntity!, insertInto: managedContext)
-    
-    //Populate Note
-    newNote.setValue(note, forKey: "notes")
-    
-    // Add note to date
-    newDate.setValue(newNote, forKey: "currentNotes")
-    
-    do {
-    try managedContext.save()
-    } catch let error as NSError {
-    print("Could not save. \(error), \(error.userInfo)")
-    }
+        let managedContext: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
         
+        //create date
+        let dateEntity = NSEntityDescription.entity(forEntityName: "CurrentDate", in: managedContext)
+        let newDate = NSManagedObject(entity: dateEntity!, insertInto: managedContext)
+        
+        //populate date
+        newDate.setValue(date, forKey: "cDate")
+    
+        //create Note
+        let notesEntity = NSEntityDescription.entity(forEntityName: "Note", in: managedContext)
+        let newNote = NSManagedObject(entity: notesEntity!, insertInto: managedContext)
+    
+        //Populate Note
+        newNote.setValue(note, forKey: "notes")
+    
+        // Add note to date
+        newDate.setValue(newNote, forKey: "currentNotes")
+    
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }        
 }
   
      // MARK: - Core Data stack

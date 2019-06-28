@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NewNotesDemo/AppDelegate.swift"
-            timestampString = "583242141.623683"
+            filePath = "NewNotesDemo/SubMenuWindowController.swift"
+            timestampString = "583406564.209676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "configureNotesDetails()"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "controlTextDidChange_Custom(obj:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NewNotesDemo/AppDelegate.swift"
-            timestampString = "583242141.624216"
+            filePath = "NewNotesDemo/SubMenuWindowController.swift"
+            timestampString = "583406564.209741"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "fetchDetails()"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "cofigureSearchDataMenu(itemsList:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NewNotesDemo/AppDelegate.swift"
-            timestampString = "583242141.624458"
+            filePath = "NewNotesDemo/SubMenuWindowController.swift"
+            timestampString = "583406564.2097861"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "fetchDetails()"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "windowDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewNotesDemo/SubMenuWindowController.swift"
+            timestampString = "583406564.2100331"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "cofigureSearchDataMenu(itemsList:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
