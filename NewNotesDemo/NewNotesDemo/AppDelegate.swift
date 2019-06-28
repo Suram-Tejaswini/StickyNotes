@@ -78,15 +78,35 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
             self.newNoteWindowController.showWindow(nil)
         }
     }
+    func editNote(data:String,title:String)  {
+        guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
+       // let fetchRequest1 = NSFetchRequest<NSManagedObject>(entityName: "Note")
+        //let fetchDateRequest = NSFetchRequest<NSManagedObject>(entityName: "currentNotes")
+        //fetchRequest1.predicate = NSPredicate(format:"notes = test1")
+        do {
+            let datesList = try managedContext.fetch(fetchRequest)
+            
+            //for i in 0..<datesList.count{
+                if  let data:NSManagedObject =  datesList[0].value(forKeyPath:"currentNotes")as? NSManagedObject, let date:String = datesList[0].value(forKeyPath:"cDate") as? String {
+                    let returnedNote:String = data.value(forKeyPath: "notes") as! String
+                    //notesListForDate.updateValue(returnedNote, forKey: date )
+                //}
+                    
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
     
     func fetchDetails() -> [String:String]{
         guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return [:] }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
-        // let fetchDateRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
+         //let fetchDateRequest = NSFetchRequest<NSManagedObject>(entityName: "currentNotes")
         do {
             let datesList = try managedContext.fetch(fetchRequest)
-
             for i in 0..<datesList.count{
                 if  let data:NSManagedObject =  datesList[i].value(forKeyPath:"currentNotes")as? NSManagedObject, let date:String = datesList[i].value(forKeyPath:"cDate") as? String {
                     let returnedNote:String = data.value(forKeyPath: "notes") as! String

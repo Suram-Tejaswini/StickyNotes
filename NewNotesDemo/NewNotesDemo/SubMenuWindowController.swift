@@ -121,19 +121,13 @@ extension SubMenuWindowController {
         return cell
     }
     
-   
-//    func tableViewSelectionIsChanging(_ note: Notification){
-//        let k = note.object as! NSTableView
-//
-//    }
    func tableViewSelectionDidChange(_ notification: Notification){
-     let k = notification.object as! NSTableView
-    let p = Array(searchList.keys)[k.selectedRow]
-     let n = searchList[p]
-    //let op = searchList[p]
-//    newNoteWindowController = NewNote(windowNibName: "NewNote")
-//    newNoteWindowController.setUpConfig(data: value,title:key)
-//    self.newNoteWindowController.showWindow(nil)
+     let selectedCell = notification.object as! NSTableView
+     let selectedData = Array(searchList)[selectedCell.selectedRow]
+        appDelegate.newNoteWindowController = NewNote(windowNibName: "NewNote")
+        appDelegate.newNoteWindowController.setUpConfig(data: selectedData.value,title:selectedData.key)
+        appDelegate.newNoteWindowController.showWindow(nil)
+    //appDelegate.editNote(data: selectedData.value,title:selectedData.key)
     
     }
     
