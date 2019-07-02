@@ -103,7 +103,9 @@ extension SubMenuWindowController {
      let selectedData = Array(searchList)[selectedCell.selectedRow]
     newNoteWindowController = NewNote(windowNibName: "NewNote")
     newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
+   // newNoteWindowController?.uuid = selectedData.key
     newNoteWindowController!.showWindow(nil)
+
     }
 }
 

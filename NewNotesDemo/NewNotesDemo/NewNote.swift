@@ -31,6 +31,7 @@ class NewNote: NSWindowController ,NSTextViewDelegate{
         uuid = uUID
     }
     func textDidChange(_ notification: Notification) {
+        
        let timestamp = DateFormatter.localizedString(from:Date(), dateStyle: .medium, timeStyle: .short)
         self.window?.title = timestamp
         self.saveNotesDetails()
