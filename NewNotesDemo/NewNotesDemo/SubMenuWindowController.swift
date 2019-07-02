@@ -9,13 +9,13 @@
 import Cocoa
 
 class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableViewDelegate,NSSearchFieldDelegate {
-    //var arraylist = ["Apple","Mango","Orange","Grapes","Sapota","Strawberry"]
-    //var searchList = [Dictionary<String, String>]()
-     var searchList  = [String:String]()
-    //var arraylist  = [Dictionary<String, Any>].self
-    var notesListForSearch :[String:String] = [String:String]()
-    var listOfNotes :[String:String] = [String:String]()
-    //var listOfNotes = [Dictionary<String, String>]
+    
+    var searchList  = Dictionary<String,Dictionary<String, String> >()
+    
+    var notesListForSearch :Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
+  
+    var newNoteWindowController : NewNote?
+    
     @IBOutlet weak var listView: NSScrollView!
     @IBOutlet weak var subMenuView: NSView!
     @IBOutlet weak var tableView: NSTableView!
@@ -26,48 +26,35 @@ class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableV
    
     override func windowDidLoad() {
         super.windowDidLoad()
-        
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-//        self.tableView.delegate = self
-//        self.tableView.dataSource = self
-////        listOfNotes = Array(fetchDetails().values)
-         listOfNotes = fetchDetails()
-//        self.searchFieldOutlet.delegate = self
-//        self.listView.isHidden = false
-        self.cofigureSearchDataMenu(itemsList: listOfNotes)
     }
     
-    func cofigureSearchDataMenu(itemsList:[String:String]){
+    func cofigureSearchDataMenu(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
         self.searchFieldOutlet.delegate = self
         self.listView.isHidden = false
-        searchList = itemsList
+        searchList = fetchDetails()
         self.tableView.reloadData()
     }
     
     // for fetching data
     
-    func fetchDetails()->[String: String]  {
+    func fetchDetails() -> Dictionary<String,Dictionary<String, String>> {
         
         guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return[:] }
         
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: NOTE_KEY)
         do {
             let datesList = try managedContext.fetch(fetchRequest)
-           
             for i in 0..<datesList.count{
-                if  let data:NSManagedObject =  datesList[i].value(forKeyPath:"currentNotes")as? NSManagedObject, let date:String = datesList[i].value(forKeyPath:"cDate") as? String {
-                    let returnedNote:String = data.value(forKeyPath: "notes") as! String
-                    notesListForSearch.updateValue(returnedNote, forKey: date )
+                let noteKey = (datesList[i].value(forKey:NOTES_UKEY)as? String)!
+                let managedObject:NSManagedObject = datesList[i].value(forKey: NOTES_DETAIL)as! NSManagedObject
+                if  let data:String = managedObject.value(forKeyPath:NOTES_CONTENT)as? String, let date:String = managedObject.value(forKeyPath:NOTES_TITLE) as? String {
+                    let notesDict:Dictionary = [NOTES_TITLE:date,NOTES_CONTENT:data]
+                    notesListForSearch.updateValue(notesDict, forKey: noteKey )
                 }
             }
-            //arraylist = Array(notesListForSearch.values)
-           // arraylist = [notesListForSearch]
-            listOfNotes = notesListForSearch
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -76,29 +63,19 @@ class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableV
     
     @IBAction func controlTextDidChange_Custom(obj: NSSearchField!) {
         if (!obj.stringValue.isEmpty) {
-           // print("Searched: \(obj.stringValue)")
             let searchString = searchFieldOutlet.stringValue
-//            searchList = arraylist.filter{$0.lowercased().hasPrefix(searchString.lowercased())}
-            
-//            let k = Array(listOfNotes).filter({$0.value.lowercased().range(of: (searchString.lowercased()))})
-             searchList = listOfNotes.filter({$0.value.lowercased().contains((searchString.lowercased()) )})
-//            let k = Array(listOfNotes).filter({(item:(key:String,value:String)) -> Bool in
-//
-//                let stringMatch = item.value.lowercased().range(of: searchString.lowercased())
-//                return stringMatch != nil ? true : false
-//            })
-            //searchList = k as? [String:String] ?? [:]
-            print(searchList)
+            let noteslist = notesListForSearch
+            searchList = noteslist.filter({$0.value[NOTES_CONTENT]!.lowercased().contains((searchString.lowercased()) )})
+            //print(searchList)
             if searchList.count>0{
                 self.tableView .reloadData()
                 self.listView.isHidden = false
-            }
-            else{
+            }else{
                 self.listView.isHidden = true
             }
         } else {
-            print("EMPTY")
-            searchList = listOfNotes
+            //print("EMPTY")
+            searchList = notesListForSearch
             self.listView.isHidden = false
             self.tableView.reloadData()
         }
@@ -113,26 +90,20 @@ extension SubMenuWindowController {
 }
 extension SubMenuWindowController {
     
-    
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
         let cell = tableView.makeView(withIdentifier: (tableColumn!.identifier), owner: self) as? NSTableCellView
-        cell?.textField?.stringValue = Array(searchList.values)[row]
+        //let dictValue :Array = Array(Array(searchList.values)[row].values)
+        cell?.textField?.stringValue = Array(searchList.values)[row][NOTES_CONTENT]!
         return cell
     }
     
    func tableViewSelectionDidChange(_ notification: Notification){
      let selectedCell = notification.object as! NSTableView
      let selectedData = Array(searchList)[selectedCell.selectedRow]
-        appDelegate.newNoteWindowController = NewNote(windowNibName: "NewNote")
-        appDelegate.newNoteWindowController.setUpConfig(data: selectedData.value,title:selectedData.key)
-        appDelegate.newNoteWindowController.showWindow(nil)
-    //appDelegate.editNote(data: selectedData.value,title:selectedData.key)
-    
-    }
-    
-    func selectRow(at index: Int) {
-       print("index")
+    newNoteWindowController = NewNote(windowNibName: "NewNote")
+    newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
+    newNoteWindowController!.showWindow(nil)
     }
 }
 

@@ -15,9 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
     @IBOutlet weak var subMenu: NSMenu!
    
     @IBOutlet weak var statusMenu: NSMenu!
-    var notesListForDate:Dictionary = [String:String]()
-    var notesList:[Dictionary] = [[String:String]]()
-    
+    var notesListForDate:Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
     var newNoteWindowController : NewNote!
     var subMenuWindowController : SubMenuWindowController!
     
@@ -27,98 +25,49 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
     func applicationDidFinishLaunching(_ aNotification: Notification) {
        
        // Insert code here to initialize your application
-        self.statusItem?.button?.title = "NotesDemo"
+        self.statusItem?.button?.title = NOTES_DEMO
         statusItem!.button?.cell?.isHighlighted = true
         statusItem?.menu = statusMenu
         statusMenu?.delegate = self
-       
+      
+        //deleteAllRecords()  // for testing
+        
         self.subMenuWindowController = SubMenuWindowController.init(windowNibName: "SubMenuWindowController")
         searchItem.view = subMenuWindowController?.window?.contentView
         self.subMenu.addItem(searchItem)
-        
-       // deleteAllRecords()  // for testing
     }
    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     func menuWillOpen(_ menu: NSMenu){
-        if  newNoteWindowController != nil{
-            if let noteStr = newNoteWindowController?.notesView.string, noteStr != "" {
-                saveDetails()
-            }
-        }
-        subMenuWindowController.cofigureSearchDataMenu(itemsList: fetchDetails())
+
+        subMenuWindowController.cofigureSearchDataMenu()
         searchItem.view = subMenuWindowController?.window?.contentView
     }
     
     func deleteAllRecords() {
-        let delegate = NSApplication.shared.delegate as! AppDelegate
-        let context = delegate.persistentContainer.viewContext
-        
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrentDate")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        let deleteFetch1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
-        let deleteRequest1 = NSBatchDeleteRequest(fetchRequest: deleteFetch1)
-        
+        guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        // Initialize Fetch Request
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: NOTE_KEY)
+
+        // Configure Fetch Request
+        fetchRequest.includesPropertyValues = false
         do {
-            try context.execute(deleteRequest)
-            try context.execute(deleteRequest1)
-            try context.save()
+            let items = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
+            for item in items {
+                managedContext.delete(item)
+            }
+            // Save Changes
+            try managedContext.save()
         } catch {
-            print ("There was an error")
+            // Error Handling
+            // ...
         }
     }
-    
-    func configureNotesDetails(){
-        let notesDetails : [String:String] =  fetchDetails()
-        for (key,value) in notesDetails{
-            newNoteWindowController = NewNote(windowNibName: "NewNote")
-            newNoteWindowController.setUpConfig(data: value,title:key)
-            self.newNoteWindowController.showWindow(nil)
-        }
-    }
-    func editNote(data:String,title:String)  {
-        guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
-       // let fetchRequest1 = NSFetchRequest<NSManagedObject>(entityName: "Note")
-        //let fetchDateRequest = NSFetchRequest<NSManagedObject>(entityName: "currentNotes")
-        //fetchRequest1.predicate = NSPredicate(format:"notes = test1")
-        do {
-            let datesList = try managedContext.fetch(fetchRequest)
-            
-            //for i in 0..<datesList.count{
-                if  let data:NSManagedObject =  datesList[0].value(forKeyPath:"currentNotes")as? NSManagedObject, let date:String = datesList[0].value(forKeyPath:"cDate") as? String {
-                    let returnedNote:String = data.value(forKeyPath: "notes") as! String
-                    //notesListForDate.updateValue(returnedNote, forKey: date )
-                //}
-                    
-            }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func fetchDetails() -> [String:String]{
-        guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return [:] }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CurrentDate")
-         //let fetchDateRequest = NSFetchRequest<NSManagedObject>(entityName: "currentNotes")
-        do {
-            let datesList = try managedContext.fetch(fetchRequest)
-            for i in 0..<datesList.count{
-                if  let data:NSManagedObject =  datesList[i].value(forKeyPath:"currentNotes")as? NSManagedObject, let date:String = datesList[i].value(forKeyPath:"cDate") as? String {
-                    let returnedNote:String = data.value(forKeyPath: "notes") as! String
-                    notesListForDate.updateValue(returnedNote, forKey: date )
-                }
-            }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        return notesListForDate
-        }
-    
+ 
     @IBAction func showNotesList(_ sender:Any){
 
     }
@@ -136,41 +85,6 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
         NSApplication.shared.terminate(self)
     }
     
-    @objc func saveDetails()  {
-        let timestamp = DateFormatter.localizedString(from:Date(), dateStyle: .medium, timeStyle: .long)
-            saveNotesDetails(note:(self.newNoteWindowController?.notesView!.string)!, date: timestamp)
-    }
-    
-    func saveNotesDetails(note:String?,date:String){
-        guard note != "" else {return}
-        guard  let appDelegate = NSApplication.shared.delegate as? AppDelegate else{ return }
-        
-        let managedContext: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
-        
-        //create date
-        let dateEntity = NSEntityDescription.entity(forEntityName: "CurrentDate", in: managedContext)
-        let newDate = NSManagedObject(entity: dateEntity!, insertInto: managedContext)
-        
-        //populate date
-        newDate.setValue(date, forKey: "cDate")
-    
-        //create Note
-        let notesEntity = NSEntityDescription.entity(forEntityName: "Note", in: managedContext)
-        let newNote = NSManagedObject(entity: notesEntity!, insertInto: managedContext)
-    
-        //Populate Note
-        newNote.setValue(note, forKey: "notes")
-    
-        // Add note to date
-        newDate.setValue(newNote, forKey: "currentNotes")
-    
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }        
-}
-  
      // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -180,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: "NotesDetails")
+        let container = NSPersistentContainer(name: NOTES_MODEL)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error {
                 // Replace this implementation with code to handle the error appropriately.
