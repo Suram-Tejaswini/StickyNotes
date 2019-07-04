@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
     @IBOutlet weak var statusMenu: NSMenu!
     
     var newNoteWindowController : NewNote!
-    var subMenuWindowController : SubMenuWindowController!
+    var subMenuView : SubMenuViewController!
     
     var searchItem :NSMenuItem = NSMenuItem(title: "", action:nil, keyEquivalent: "")
     var statusItem:NSStatusItem? = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -30,9 +30,8 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
         statusMenu?.delegate = self
       
        // deleteAllRecords()  // for testing
-        
-        self.subMenuWindowController = SubMenuWindowController.init(windowNibName: "SubMenuWindowController")
-        searchItem.view = subMenuWindowController?.window?.contentView
+        subMenuView  = SubMenuViewController.init(nibName: "SubMenuViewController", bundle: nil)
+        searchItem.view = subMenuView.view
         self.subMenu.addItem(searchItem)
     }
    
@@ -40,9 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
         // Insert code here to tear down your application
     }
     func menuWillOpen(_ menu: NSMenu){
-
-        subMenuWindowController.cofigureSearchDataMenu()
-        searchItem.view = subMenuWindowController?.window?.contentView
+        subMenuView.cofigureSearchDataMenu()
+        searchItem.view = subMenuView.view
     }
     
     func deleteAllRecords() {

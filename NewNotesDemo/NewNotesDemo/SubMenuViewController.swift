@@ -1,33 +1,29 @@
 //
-//  SubMenuWindowController.swift
-//  NewSubMenu
+//  SubMenuViewController.swift
+//  NewNotesDemo
 //
-//  Created by suram.tejaswini on 19/06/19.
+//  Created by suram.tejaswini on 04/07/19.
 //  Copyright © 2019 suram.tejaswini. All rights reserved.
 //
 
 import Cocoa
 
-class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableViewDelegate,NSSearchFieldDelegate {
+class SubMenuViewController: NSViewController,NSTableViewDataSource,NSTableViewDelegate,NSSearchFieldDelegate {
+    
+    @IBOutlet weak var searchFieldOutlet: NSSearchField!
+    @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var listView: NSScrollView!
     
     var searchList  = Dictionary<String,Dictionary<String, String> >()
-    
-    var notesListForSearch :Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
-  
     var newNoteWindowController : NewNote!
-    
-    @IBOutlet weak var listView: NSScrollView!
-    @IBOutlet weak var subMenuView: NSView!
-    @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var searchFieldOutlet: NSSearchField!
-    
+    var notesListForSearch :Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
     lazy var appDelegate =  NSApplication.shared.delegate as! AppDelegate
     let searchItem :NSMenuItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
-   
-    override func windowDidLoad() {
-        super.windowDidLoad()
-    }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do view setup here.
+    }
     func cofigureSearchDataMenu(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -61,8 +57,9 @@ class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableV
         return notesListForSearch
     }
     
-    @IBAction func controlTextDidChange_Custom(obj: NSSearchField!) {
-        if (!obj.stringValue.isEmpty) {
+    func controlTextDidChange(_ notification: Notification) {
+         guard let field = notification.object as? NSSearchField, field == self.searchFieldOutlet else { return }
+        if (!field.stringValue.isEmpty) {
             let searchString = searchFieldOutlet.stringValue
             let noteslist = notesListForSearch
             searchList = noteslist.filter({$0.value[NOTES_CONTENT]!.lowercased().contains((searchString.lowercased()) )})
@@ -81,14 +78,14 @@ class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableV
         }
     }
 }
-extension SubMenuWindowController {
+extension SubMenuViewController {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         return searchList.count
     }
     
 }
-extension SubMenuWindowController {
+extension SubMenuViewController {
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
@@ -97,20 +94,21 @@ extension SubMenuWindowController {
         return cell
     }
     
-   func tableViewSelectionDidChange(_ notification: Notification){
-     let selectedCell = notification.object as! NSTableView
-     let selectedData = Array(searchList)[selectedCell.selectedRow]
-     let displayingWindows = NSApplication.shared.windows
-     let existedWindows = displayingWindows.filter({$0.contentViewController?.identifier!.rawValue == selectedData.key})
-     if existedWindows.count == 0{
-    newNoteWindowController = NewNote(windowNibName: "NewNote")
-    newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
-    newNoteWindowController!.showWindow(nil)
-        newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
-    } else{
-    existedWindows[0].makeKeyAndOrderFront(selectedCell)
-    }
+    func tableViewSelectionDidChange(_ notification: Notification){
+        
+        print("selected")
+        let selectedCell = notification.object as! NSTableView
+        let selectedData = Array(searchList)[selectedCell.selectedRow]
+        let displayingWindows = NSApplication.shared.windows
+        let existedWindows = displayingWindows.filter({$0.contentViewController?.identifier!.rawValue == selectedData.key})
+        if existedWindows.count == 0{
+            newNoteWindowController = NewNote(windowNibName: "NewNote")
+            newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
+            newNoteWindowController!.showWindow(nil)
+            newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
+        } else{
+            existedWindows[0].makeKeyAndOrderFront(selectedCell)
+        }
     }
 }
-
 
