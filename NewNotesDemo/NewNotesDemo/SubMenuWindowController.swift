@@ -93,7 +93,6 @@ extension SubMenuWindowController {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
         let cell = tableView.makeView(withIdentifier: (tableColumn!.identifier), owner: self) as? NSTableCellView
-        //let dictValue :Array = Array(Array(searchList.values)[row].values)
         cell?.textField?.stringValue = Array(searchList.values)[row][NOTES_CONTENT]!
         return cell
     }
@@ -101,19 +100,15 @@ extension SubMenuWindowController {
    func tableViewSelectionDidChange(_ notification: Notification){
      let selectedCell = notification.object as! NSTableView
      let selectedData = Array(searchList)[selectedCell.selectedRow]
-
-    let displayingWindows = NSApplication.shared.windows
-    //var windowAlreadyExists:Bool?
-   let existedWindows = displayingWindows.filter({$0.contentViewController?.identifier!.rawValue == selectedData.key})
-    if existedWindows.count == 0{
+     let displayingWindows = NSApplication.shared.windows
+     let existedWindows = displayingWindows.filter({$0.contentViewController?.identifier!.rawValue == selectedData.key})
+     if existedWindows.count == 0{
     newNoteWindowController = NewNote(windowNibName: "NewNote")
     newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
-  
     newNoteWindowController!.showWindow(nil)
         newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
-
-    }else{
-        existedWindows[0].makeKeyAndOrderFront(selectedCell)
+    } else{
+    existedWindows[0].makeKeyAndOrderFront(selectedCell)
     }
     }
 }

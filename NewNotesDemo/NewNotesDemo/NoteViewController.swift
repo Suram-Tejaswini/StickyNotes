@@ -18,16 +18,6 @@ class NoteViewController: NSViewController ,NSTextViewDelegate{
         self.noteViiew.delegate = self
         
     }
-    //Update the view, if already loaded.
-    // - Tag: setRepresentedObjectExample
-    override var representedObject: Any? {
-        didSet {
-            // Pass down the represented object to all of the child view controllers.
-            for child in children {
-                child.representedObject = representedObject
-            }
-        }
-    }
     
     func textDidChange(_ notification: Notification) {
         let timestamp = DateFormatter.localizedString(from:Date(), dateStyle: .medium, timeStyle: .short)

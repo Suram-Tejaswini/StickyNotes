@@ -13,9 +13,8 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
  var noteViewController : NoteViewController!
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var subMenu: NSMenu!
-   
     @IBOutlet weak var statusMenu: NSMenu!
-    //var notesListForDate:Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
+    
     var newNoteWindowController : NewNote!
     var subMenuWindowController : SubMenuWindowController!
     
@@ -76,17 +75,10 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
         newNoteWindowController = NewNote(windowNibName: "NewNote")
         newNoteWindowController?.showWindow(nil)
         newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
-//        noteViewController = NoteViewController.init(nibName: "NoteViewController", bundle: nil)
-//        
-//        self.window?.contentViewController = noteViewController
     }
     
     @IBAction func showPrferences(_ sender: Any) {
-       
-        let n = NSApplication.shared.windows.count
-        print(n)
-        
-        
+    
     }
     
     @IBAction func quitTheApp(_ sender: Any) {

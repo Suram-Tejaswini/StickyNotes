@@ -10,25 +10,14 @@ import Cocoa
 
 class NewNote: NSWindowController ,NSTextViewDelegate{
     var uuid : String?
-   
-    //var contentViewController: ViewController!
+
     @IBOutlet var notesView: NSTextView!
 
     var noteViewController : NoteViewController!
     
     override func windowDidLoad() {
         super.windowDidLoad()
-      
-//  k = NoteViewController.init(nibName: "NoteViewController", bundle: nil)
-//        self.window?.contentViewController = k
-        
-       //
-        
-//        noteViewController = NoteViewController.init(nibName: "NoteViewController", bundle: nil)
-//        
-//        self.window?.contentViewController = noteViewController
         setUpConfig(data:"", title: "Note", uUID: "")
- 
     }
     override init(window: NSWindow?) {
         super.init(window:nil)
