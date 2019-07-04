@@ -45,7 +45,6 @@
                                 <size key="maxSize" width="450" height="10000000"/>
                                 <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
-                                    <binding destination="mx5-u8-TgW" name="value" keyPath="representedObject.contentString" id="Qlw-Kz-e2N"/>
                                     <outlet property="delegate" destination="-2" id="Hb8-7A-1vl"/>
                                 </connections>
                             </textView>
