@@ -23,6 +23,7 @@ class SubMenuViewController: NSViewController,NSTableViewDataSource,NSTableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        
     }
     func cofigureSearchDataMenu(){
         self.tableView.delegate = self
@@ -96,8 +97,7 @@ extension SubMenuViewController {
     
     func tableViewSelectionDidChange(_ notification: Notification){
         
-        print("selected")
-        let selectedCell = notification.object as! NSTableView
+     let selectedCell = notification.object as! NSTableView
         let selectedData = Array(searchList)[selectedCell.selectedRow]
         let displayingWindows = NSApplication.shared.windows
         let existedWindows = displayingWindows.filter({$0.contentViewController?.identifier!.rawValue == selectedData.key})
@@ -105,10 +105,11 @@ extension SubMenuViewController {
             newNoteWindowController = NewNote(windowNibName: "NewNote")
             newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
             newNoteWindowController!.showWindow(nil)
-            newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
+          //  newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
         } else{
-            existedWindows[0].makeKeyAndOrderFront(selectedCell)
+            existedWindows[0].makeKeyAndOrderFront(nil)
         }
     }
+ 
 }
 
