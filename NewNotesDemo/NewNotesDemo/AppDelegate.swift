@@ -10,12 +10,12 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenuDelegate{
-
+ var noteViewController : NoteViewController!
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var subMenu: NSMenu!
    
     @IBOutlet weak var statusMenu: NSMenu!
-    var notesListForDate:Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
+    //var notesListForDate:Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
     var newNoteWindowController : NewNote!
     var subMenuWindowController : SubMenuWindowController!
     
@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
         statusItem?.menu = statusMenu
         statusMenu?.delegate = self
       
-        //deleteAllRecords()  // for testing
+       // deleteAllRecords()  // for testing
         
         self.subMenuWindowController = SubMenuWindowController.init(windowNibName: "SubMenuWindowController")
         searchItem.view = subMenuWindowController?.window?.contentView
@@ -75,10 +75,18 @@ class AppDelegate: NSObject, NSApplicationDelegate ,NSSearchFieldDelegate,NSMenu
     @IBAction func createNewNote(_ sender: Any) {
         newNoteWindowController = NewNote(windowNibName: "NewNote")
         newNoteWindowController?.showWindow(nil)
+        newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
+//        noteViewController = NoteViewController.init(nibName: "NoteViewController", bundle: nil)
+//        
+//        self.window?.contentViewController = noteViewController
     }
     
     @IBAction func showPrferences(_ sender: Any) {
        
+        let n = NSApplication.shared.windows.count
+        print(n)
+        
+        
     }
     
     @IBAction func quitTheApp(_ sender: Any) {
