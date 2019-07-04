@@ -14,7 +14,7 @@ class SubMenuWindowController: NSWindowController,NSTableViewDataSource,NSTableV
     
     var notesListForSearch :Dictionary <String,Dictionary> = [String:Dictionary<String,String>]()
   
-    var newNoteWindowController : NewNote?
+    var newNoteWindowController : NewNote!
     
     @IBOutlet weak var listView: NSScrollView!
     @IBOutlet weak var subMenuView: NSView!
@@ -101,11 +101,20 @@ extension SubMenuWindowController {
    func tableViewSelectionDidChange(_ notification: Notification){
      let selectedCell = notification.object as! NSTableView
      let selectedData = Array(searchList)[selectedCell.selectedRow]
+
+    let displayingWindows = NSApplication.shared.windows
+    //var windowAlreadyExists:Bool?
+   let existedWindows = displayingWindows.filter({$0.contentViewController?.identifier!.rawValue == selectedData.key})
+    if existedWindows.count == 0{
     newNoteWindowController = NewNote(windowNibName: "NewNote")
     newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
-   // newNoteWindowController?.uuid = selectedData.key
+  
     newNoteWindowController!.showWindow(nil)
+        newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
 
+    }else{
+        existedWindows[0].makeKeyAndOrderFront(selectedCell)
+    }
     }
 }
 
