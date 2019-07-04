@@ -24,19 +24,18 @@ class NoteViewController: NSViewController ,NSTextViewDelegate{
       self.view.window?.title = timestamp  
         self.saveNotesDetails()
     }
+    
     func setUpConfig(data: String?,title:String?,uUID:String?)  {
         if uUID == ""{
+            // create new uuidd for each view controller
             uuid = UUID().uuidString
         }else{
             uuid = uUID
         }
         self.view.window?.title = title!
         self.noteViiew.string = data!
-        
-       
-        let b = NSUserInterfaceItemIdentifier.init(uuid!)
-        self.identifier = b
-        
+        let viewIdentifier = NSUserInterfaceItemIdentifier.init(uuid!)
+        self.identifier = viewIdentifier
     }
     func saveNotesDetails(){
         guard self.noteViiew.string != "" else {return}

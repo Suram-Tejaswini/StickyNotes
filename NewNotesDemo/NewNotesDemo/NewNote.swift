@@ -9,8 +9,8 @@
 import Cocoa
 
 class NewNote: NSWindowController ,NSTextViewDelegate{
+    
     var uuid : String?
-
     @IBOutlet var notesView: NSTextView!
 
     var noteViewController : NoteViewController!
@@ -27,7 +27,7 @@ class NewNote: NSWindowController ,NSTextViewDelegate{
     }
     func setUpConfig(data: String?,title:String?,uUID:String?)  {
 
-        uuid = uUID
+        self.uuid = uUID
     
         noteViewController = NoteViewController.init(nibName: "NoteViewController", bundle: nil)
 
