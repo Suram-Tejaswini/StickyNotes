@@ -18,6 +18,7 @@ class NewNote: NSWindowController ,NSTextViewDelegate{
     override func windowDidLoad() {
         super.windowDidLoad()
         setUpConfig(data:"", title: "Note", uUID: "")
+        shouldCascadeWindows = true
     }
     override init(window: NSWindow?) {
         super.init(window:nil)

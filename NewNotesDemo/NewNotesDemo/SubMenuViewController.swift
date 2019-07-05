@@ -109,6 +109,8 @@ extension SubMenuViewController {
         } else{
             existedWindows[0].makeKeyAndOrderFront(nil)
         }
+        self.view.window?.makeKeyAndOrderFront(nil)
+   
     }
  
 }
