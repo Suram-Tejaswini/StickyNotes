@@ -104,13 +104,10 @@ extension SubMenuViewController {
         if existedWindows.count == 0{
             newNoteWindowController = NewNote(windowNibName: "NewNote")
             newNoteWindowController?.setUpConfig(data: selectedData.value[NOTES_CONTENT]!, title: selectedData.value[NOTES_TITLE]!, uUID: selectedData.key)
-            newNoteWindowController!.showWindow(nil)
-          //  newNoteWindowController?.window!.makeKeyAndOrderFront(nil)
+           // newNoteWindowController!.showWindow(nil)
         } else{
-            existedWindows[0].makeKeyAndOrderFront(nil)
+            existedWindows[0].orderedIndex = 0
         }
-        self.view.window?.makeKeyAndOrderFront(nil)
-   
     }
  
 }
