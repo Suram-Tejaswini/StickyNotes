@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NoteViewController" customModule="NewNotesDemo" customModuleProvider="target">
+            <connections>
+                <outlet property="noteViiew" destination="7rf-WU-LDf" id="KWZ-Fq-v4R"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <viewController id="mx5-u8-TgW">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="Fqs-D4-oeb"/>
+            </connections>
+        </viewController>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rzP-fZ-fdG">
+                    <rect key="frame" x="122" y="163" width="81" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EKh-mr-CBN">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxd-Wl-xGa">
+                    <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hYr-8b-k8j">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="7rf-WU-LDf">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="450" height="300"/>
+                                <size key="maxSize" width="450" height="10000000"/>
+                                <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <outlet property="delegate" destination="-2" id="Hb8-7A-1vl"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="J7b-VG-c8c">
+                        <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="6SC-Qz-Vsc">
+                        <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="yxd-Wl-xGa" secondAttribute="bottom" id="9JX-bl-Aeo"/>
+                <constraint firstItem="yxd-Wl-xGa" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="ALK-18-Iy2"/>
+                <constraint firstItem="yxd-Wl-xGa" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Myy-Mu-NnS"/>
+                <constraint firstAttribute="trailing" secondItem="yxd-Wl-xGa" secondAttribute="trailing" id="uIO-MH-DCE"/>
+            </constraints>
+        </customView>
+        <userDefaultsController representsSharedInstance="YES" id="xCP-le-h3O"/>
+    </objects>
+</document>

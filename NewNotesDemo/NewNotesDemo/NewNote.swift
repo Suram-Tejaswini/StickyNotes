@@ -8,20 +8,34 @@
 
 import Cocoa
 
-class NewNote: NSWindowController {
+class NewNote: NSWindowController ,NSTextViewDelegate{
+    
+    var uuid : String?
+    @IBOutlet var notesView: NSTextView!
 
+    var noteViewController : NoteViewController!
+    
     override func windowDidLoad() {
         super.windowDidLoad()
-
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        setUpConfig(data:"", title: "Note", uUID: "")
+        shouldCascadeWindows = true
     }
     override init(window: NSWindow?) {
-        
         super.init(window:nil)
-        shouldCascadeWindows = false
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    func setUpConfig(data: String?,title:String?,uUID:String?)  {
+
+        self.uuid = uUID
+    
+        noteViewController = NoteViewController.init(nibName: "NoteViewController", bundle: nil)
+
+        self.window?.contentViewController = noteViewController
+      
+        noteViewController.setUpConfig(data: data, title: title, uUID: uUID)
         
     }
+
 }
